@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniGameApp</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div id="particles"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">MiniGame</div>
+            <div class="user-profile">
+                <div class="user-avatar" role="button" aria-label="User Profile"><span>G</span></div>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i> <span id="level">1</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-trophy"></i> <span id="score">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-coins"></i> <span id="coins">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero-section">
+                <h1>Season 1: Adventure Begins</h1>
+                <p>Embark on an exciting journey through mysterious lands. Collect treasures, defeat enemies, and unlock new levels!</p>
+                <div class="game-canvas" role="region" aria-live="polite" aria-label="Game area">
+                    <i class="fas fa-gamepad fa-3x"></i>
+                </div>
+                <button id="playBtn" class="btn-primary">Play Now</button>
+            </section>
+
+            <section class="game-features">
+                <h2>Game Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Explore Worlds</h3>
+                        <p>Discover unique environments and hidden secrets.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-sword"></i>
+                        <h3>Epic Battles</h3>
+                        <p>Challenge powerful foes and hone your combat skills.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-treasure-chest"></i>
+                        <h3>Collect Loot</h3>
+                        <p>Gather rare items, currency, and powerful artifacts.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Climb Leaderboards</h3>
+                        <p>Compete with friends and players worldwide.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="mobile-menu">
+            <a href="#" class="menu-item active" aria-current="page" role="link">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="menu-item" role="link">
+                <i class="fas fa-gamepad"></i>
+                <span>Games</span>
+            </a>
+            <a href="#" class="menu-item" role="link">
+                <i class="fas fa-chart-bar"></i>
+                <span>Stats</span>
+            </a>
+            <a href="#" class="menu-item" role="link">
+                <i class="fas fa-user-circle"></i>
+                <span>Profile</span>
+            </a>
+        </footer>
+    </div>
+
+    <div class="auth-modal" id="authModal">
+        <div class="auth-modal-content">
+            <span class="auth-close-btn" id="authCloseBtn">&times;</span>
+            <h2>Login / Register</h2>
+
+            <div class="auth-form" id="loginForm">
+                <h3>Login</h3>
+                <input type="text" id="loginUsername" placeholder="Username">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button id="loginBtn">Login</button>
+            </div>
+
+            <div class="auth-form" id="registerForm" style="display: none;">
+                <h3>Register</h3>
+                <input type="text" id="registerUsername" placeholder="Username">
+                <input type="password" id="registerPassword" placeholder="Password">
+                <button id="registerBtn">Register</button>
+            </div>
+
+            <p id="authToggle">
+                <a href="#" id="toggleLogin">Login</a> |
+                <a href="#" id="toggleRegister">Register</a>
+            </p>
+            <p id="authMessage"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

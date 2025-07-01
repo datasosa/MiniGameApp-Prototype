@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": "user123",
+      "username": "testuser",
+      "password": "$2b$10$4w8CWt49TcgVvSfRuYW5auhkgL9eeZ4Vz1wF.xKmgDSc9QAv/l7Kq",
+      "avatarInitial": "T",
+      "score": 1500,
+      "level": 15,
+      "coins": 600
+    }
+  ]
+}
