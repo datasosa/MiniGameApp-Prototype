@@ -1,65 +1,62 @@
-# MiniGameApp-Prototype
+# Arcade Ascend: A Mini-Game Web App Prototype
 
-### Live Demo
+A full-stack web application prototype for a mini-game, showcasing user authentication, game data management, and a responsive frontend.
 
-[![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://minigameapp-prototype.onrender.com)
+## Live Demo
 
-* **Live App:** [Link to your live demo](https://minigameapp-prototype.onrender.com)
+Experience the app live on Render: [https://minigameapp-prototype.onrender.com](https://minigameapp-prototype.onrender.com)
 
----
+## Current State & Implemented Features
 
-### Project Description
+This prototype demonstrates the foundational elements of a web-based mini-game application. Key implemented features include:
 
-This is a full-stack prototype for a mini-game web application. It was built to demonstrate proficiency in both front-end and back-end development. The application features a simple, interactive game on the client-side and a Node.js server to handle requests and manage data using a simple JSON file.
+* **User Authentication Flow:**
+    * **Guest Access:** Users can immediately "Play as Guest" to explore the game interface without registration.
+    * **User Registration:** New users can register for an account.
+    * **User Login:** Registered users can log in to access the game.
+* **Dynamic UI Management:** The application seamlessly switches between the authentication modal and the main game interface upon successful login or guest access.
+* **Game User Interface (UI):** A clean and responsive UI displays core game elements like user avatar, score, level, and coins.
+* **Basic Game Stats Tracking:** Users' scores, levels, and coins are updated in the UI and persisted to the backend when the "PLAY" button is clicked.
+* **Full-Stack Deployment:** The application is deployed and hosted on Render.com, demonstrating a complete development lifecycle from code to live service.
 
-### Features
+## Technologies Used
 
-* **Interactive Game Logic:** Playable mini-game in the browser.
-* **Front-end UI:** User interface built with HTML, CSS, and vanilla JavaScript.
-* **Server-Side Data Storage:** Simple API using a JSON file (`db.json`) for data persistence.
-* **Express.js Backend:** A lightweight server to serve static files and handle API requests.
+* **Frontend:** HTML5, CSS3, JavaScript
+* **Backend:** Node.js (Express.js)
+* **Database:** Local JSON file (`db.json`) for simplified data persistence
+* **Deployment:** Render.com
+* **Version Control:** Git & GitHub
 
-### Technologies Used
+## Future Development Considerations
 
-* **Front-end:**
-    * **HTML5:** For the page structure.
-    * **CSS3:** For styling and layout.
-    * **JavaScript (Vanilla):** For game logic and front-end interactivity.
-* **Back-end:**
-    * **Node.js:** JavaScript runtime environment.
-    * **Express.js:** Fast, minimalist web framework for Node.js.
-    * **JSON:** For lightweight, file-based data storage (`db.json`).
+While the core framework is established, several exciting features and improvements are planned or could be implemented in future iterations:
 
-### Installation & Setup
+* **Implement Core Mini-Game Logic:** Develop an actual interactive mini-game instead of the current placeholder.
+* **User-Specific Game Data:** Enhance backend logic to retrieve and display specific game data for logged-in registered users (beyond the current guest data default).
+* **Robust Session Management:** Implement JWT (JSON Web Tokens) or similar for secure and scalable user sessions.
+* **Database Migration:** Transition from a flat-file `db.json` to a more robust database system (e.g., MongoDB, PostgreSQL) for better data management and scalability.
+* **Leaderboard Functionality:** Make the leaderboard dynamic, fetching actual top scores from the database.
+* **Shop System:** Develop a functional in-game shop where players can spend coins.
+* **Sound Effects & Music:** Integrate audio for a more immersive gaming experience.
+* **Enhanced Error Handling & UI Feedback:** Provide more comprehensive error messages and visual cues for user actions.
+* **Responsive Design Improvements:** Further optimize the UI for various screen sizes and orientations.
 
-To run this project locally, follow these steps:
+## Getting Started (Local Development)
+
+To run this project locally:
 
 1.  **Clone the repository:**
-    `git clone https://github.com/datasosa/MiniGameApp-Prototype.git`
-2.  **Navigate into the project directory:**
-    `cd MiniGameApp-Prototype`
-3.  **Install the Node.js dependencies:**
-    `npm install`
-4.  **Start the server:**
-    `node server.js`
-5.  **Open the application:**
-    Open your web browser and navigate to `http://localhost:3000` to view the game.
-
-### Project Structure
-
-* `index.html`: The main HTML file for the game's interface.
-* `style.css`: The CSS file for styling the application.
-* `script.js`: The client-side JavaScript for game logic and user interaction.
-* `server.js`: The Node.js server using Express.js to serve files and handle data.
-* `db.json`: A simple JSON file serving as a mock database.
-* `package.json`: Manages project dependencies and scripts.
-* `node_modules/`: (Ignored by Git) Contains installed npm packages.
-* `.gitignore`: Specifies files and directories to be ignored by Git.
-
-### License
-
-This project is licensed under the **MIT License**.
-
-### Contact
-
-**Osasele Osagie** - [linkedin.com/in/Osas-Osagie] - [osasosagierich@gmail.com]
+    ```bash
+    git clone [https://github.com/datasosa/MiniGameApp-Prototype.git](https://github.com/datasosa/MiniGameApp-Prototype.git)
+    cd MiniGameApp-Prototype
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Start the server:**
+    ```bash
+    node server.js
+    ```
+4.  **Open in browser:**
+    Navigate to `http://localhost:3000` in your web browser.
