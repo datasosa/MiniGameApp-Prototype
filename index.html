@@ -3,115 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniGameApp</title>
+    <title>Arcade Ascend</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="particles"></div>
 
-    <div class="container" id="main-app-container" style="display: none;">
-        <header>
-            <div class="logo">MiniGame</div>
+    <div class="container" id="main-app-container" style="display: block !important;">
+        <header class="header">
+            <div class="logo" role="banner" aria-label="Arcade Ascend Logo">
+                Arcade Ascend
+            </div>
             <div class="user-profile">
-                <div class="user-avatar" role="button" aria-label="User Profile"><span>G</span></div>
-                <div class="user-stats">
-                    <div class="stat-item">
-                        <i class="fas fa-star"></i> <span id="level">1</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-trophy"></i> <span id="score">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-coins"></i> <span id="coins">0</span>
-                    </div>
+                <div class="user-avatar" role="img" aria-label="User Profile Avatar">
+                    <span>G</span>
+                </div>
+                <div class="user-stats" role="contentinfo">
+                    <p>Score: <span id="score">0</span></p>
+                    <p>Level: <span id="level">1</span></p>
+                    <p>Coins: <span id="coins">0</span></p>
                 </div>
             </div>
         </header>
 
-        <main>
-            <section class="hero-section">
-                <h1>Season 1: Adventure Begins</h1>
-                <p>Embark on an exciting journey through mysterious lands. Collect treasures, defeat enemies, and unlock new levels!</p>
-                <div class="game-canvas" role="region" aria-live="polite" aria-label="Game area">
-                    <i class="fas fa-gamepad fa-3x"></i> 
-                </div>
-                <button id="playBtn" class="btn-primary">Play Now</button>
+        <main class="game-area">
+            <section class="game-canvas" role="region" aria-label="Game Play Area">
+                <i class="fas fa-play-circle fa-5x" style="animation: pulse 2s infinite"></i>
+                <p style="margin-top:20px;">Press Play to Start</p>
             </section>
-
-            <section class="game-features">
-                <h2>Game Features</h2>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <i class="fas fa-map-marked-alt"></i>
-                        <h3>Explore Worlds</h3>
-                        <p>Discover unique environments and hidden secrets.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-sword"></i>
-                        <h3>Epic Battles</h3>
-                        <p>Challenge powerful foes and hone your combat skills.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-treasure-chest"></i>
-                        <h3>Collect Loot</h3>
-                        <p>Gather rare items, currency, and powerful artifacts.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>Climb Leaderboards</h3>
-                        <p>Compete with friends and players worldwide.</p>
-                    </div>
+            <aside class="leaderboard-ad">
+                <h3>Top Scores!</h3>
+                <ol aria-label="Game Leaderboard">
+                    <li>Player 1: 15000</li>
+                    <li>Player 2: 12000</li>
+                    <li>Player 3: 10000</li>
+                </ol>
+                <div class="ad-banner" role="complementary" aria-label="Advertisement">
+                    <p>AD SPACE: Your game here!</p>
                 </div>
-            </section>
+            </aside>
         </main>
 
-        <footer class="mobile-menu">
-            <a href="#" class="menu-item active" aria-current="page" role="link">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <a href="#" class="menu-item" role="link">
+        <nav class="mobile-menu" role="navigation" aria-label="Mobile Game Menu">
+            <a href="#" class="menu-item active" aria-current="page">
                 <i class="fas fa-gamepad"></i>
-                <span>Games</span>
+                <span>Play</span>
             </a>
-            <a href="#" class="menu-item" role="link">
-                <i class="fas fa-chart-bar"></i>
-                <span>Stats</span>
+            <a href="#" class="menu-item">
+                <i class="fas fa-trophy"></i>
+                <span>Leaderboard</span>
             </a>
-            <a href="#" class="menu-item" role="link">
-                <i class="fas fa-user-circle"></i>
-                <span>Profile</span>
+            <a href="#" class="menu-item">
+                <i class="fas fa-store"></i>
+                <span>Shop</span>
             </a>
-        </footer>
+            <a href="#" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <button id="playBtn" class="play-button" aria-label="Play Game">PLAY</button>
     </div>
 
-    <div class="auth-modal" id="authModal" style="display: none;">
-        <div class="auth-modal-content">
-            <span class="auth-close-btn" id="authCloseBtn">&times;</span>
-            <h2>Login / Register</h2>
+    <div class="auth-modal" id="authModal" style="display: flex !important;">
+        <div class="auth-content">
+            <button class="auth-close-btn" id="authCloseBtn" aria-label="Close Authentication Modal">&times;</button>
+            <h2 class="auth-title">Welcome to Arcade Ascend!</h2>
 
             <div class="auth-form" id="loginForm">
                 <h3>Login</h3>
-                <input type="text" id="loginUsername" placeholder="Username">
-                <input type="password" id="loginPassword" placeholder="Password">
-                <button id="loginBtn">Login</button>
+                <div class="form-group">
+                    <label for="loginUsername">Username:</label>
+                    <input type="text" id="loginUsername" placeholder="Enter your username" aria-label="Login Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <password id="loginPassword" placeholder="Enter your password" aria-label="Login Password" required></password>
+                </div>
+                <button id="loginBtn" class="auth-btn">Login</button>
+                <p class="auth-toggle">Don't have an account? <a href="#" id="toggleRegister">Register here</a>.</p>
+                <button id="guestButton" class="auth-btn guest-btn">Play as Guest</button>
             </div>
 
             <div class="auth-form" id="registerForm" style="display: none;">
                 <h3>Register</h3>
-                <input type="text" id="registerUsername" placeholder="Username">
-                <input type="password" id="registerPassword" placeholder="Password">
-                <button id="registerBtn">Register</button>
+                <div class="form-group">
+                    <label for="registerUsername">Username:</label>
+                    <input type="text" id="registerUsername" placeholder="Choose a username" aria-label="Register Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password:</label>
+                    <password id="registerPassword" placeholder="Choose a password" aria-label="Register Password" required></password>
+                </div>
+                <button id="registerBtn" class="auth-btn">Register</button>
+                <p class="auth-toggle">Already have an account? <a href="#" id="toggleLogin">Login here</a>.</p>
             </div>
-            
-            <p id="authToggle" style="margin-top: 15px;">
-                <a href="#" id="toggleLogin">Login</a> |
-                <a href="#" id="toggleRegister">Register</a>
-            </p>
-            <button id="guestButton" style="margin-top: 10px;">Play as Guest</button>
-            
-            <p id="authMessage"></p>
+
+            <p class="auth-message" id="authMessage" role="alert" aria-live="assertive"></p>
         </div>
     </div>
 
