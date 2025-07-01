@@ -12,9 +12,9 @@ const guestButton = document.getElementById('guestButton');
 const authMessage = document.getElementById('authMessage');
 
 const loginUsernameInput = document.getElementById('loginUsername');
-const loginPasswordInput = document.getElementById('loginPassword'); // Ensure this is the correct ID for the password input
+const loginPasswordInput = document.getElementById('loginPassword');
 const registerUsernameInput = document.getElementById('registerUsername');
-const registerPasswordInput = document.getElementById('registerPassword'); // Ensure this is the correct ID for the password input
+const registerPasswordInput = document.getElementById('registerPassword');
 
 const userAvatarSpan = document.querySelector('.user-avatar span');
 const scoreSpan = document.getElementById('score');
@@ -24,7 +24,6 @@ const coinsSpan = document.getElementById('coins');
 const playBtn = document.getElementById('playBtn'); // Example for game start
 
 // --- API Base URL ---
-// Use the Render.com URL for production, localhost for local development
 const API_BASE_URL = 'https://minigameapp-prototype.onrender.com';
 // const API_BASE_URL = 'http://localhost:3000'; // For local testing
 
@@ -35,46 +34,50 @@ let gameStats = { score: 0, level: 1, coins: 0 };
 // --- Helper Functions ---
 
 function showAuthMessage(message, type = 'error') {
-    authMessage.textContent = message;
-    authMessage.className = `auth-message ${type}`; // 'error' or 'success'
+    if (authMessage) {
+        authMessage.textContent = message;
+        authMessage.className = `auth-message ${type}`; // 'error' or 'success'
+    }
 }
 
 function clearAuthMessage() {
-    authMessage.textContent = '';
-    authMessage.className = 'auth-message';
+    if (authMessage) {
+        authMessage.textContent = '';
+        authMessage.className = 'auth-message';
+    }
 }
 
 function updateGameUI() {
     if (currentUser) {
-        userAvatarSpan.textContent = currentUser.avatarInitial || currentUser.username.charAt(0);
+        userAvatarSpan.textContent = currentUser.avatarInitial || currentUser.username.charAt(0).toUpperCase();
     }
-    scoreSpan.textContent = gameStats.score;
-    levelSpan.textContent = gameStats.level;
-    coinsSpan.textContent = gameStats.coins;
+    if (scoreSpan) scoreSpan.textContent = gameStats.score;
+    if (levelSpan) levelSpan.textContent = gameStats.level;
+    if (coinsSpan) coinsSpan.textContent = gameStats.coins;
 }
 
+// Adjusted display functions
 function showMainApp() {
+    console.log("Attempting to show main app and hide auth modal.");
     if (mainAppContainer) {
         mainAppContainer.style.display = 'block';
     }
     if (authModal) {
         authModal.style.display = 'none';
     }
-    // Remove the debugging !important styles after successful login/guest
-    if (mainAppContainer) mainAppContainer.style.removeProperty('display');
-    if (authModal) authModal.style.removeProperty('display');
 }
 
 function showAuthModal() {
+    console.log("Attempting to show auth modal and hide main app.");
     if (mainAppContainer) {
         mainAppContainer.style.display = 'none';
     }
     if (authModal) {
         authModal.style.display = 'flex';
+        // Ensure login form is visible by default when modal appears
+        if (loginForm) loginForm.style.display = 'block';
+        if (registerForm) registerForm.style.display = 'none';
     }
-    // Remove the debugging !important styles
-    if (mainAppContainer) mainAppContainer.style.removeProperty('display');
-    if (authModal) authModal.style.removeProperty('display');
 }
 
 // --- API Calls ---
@@ -86,26 +89,23 @@ async function fetchInitialGameData(username = 'GuestPlayer') {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Initial game data fetched:', data); // Log to console
+        console.log('Initial game data fetched:', data);
         gameStats.score = data.score;
         gameStats.level = data.level;
         gameStats.coins = data.coins;
 
-        // If data includes user info, update currentUser
         if (data.user) {
             currentUser = data.user;
         } else {
-             // Fallback for initial-data if user isn't explicit
-            currentUser = { id: 'guest', username: 'GuestPlayer', avatarInitial: 'G' };
+             currentUser = { id: 'guest', username: 'GuestPlayer', avatarInitial: 'G' };
         }
         updateGameUI();
         showMainApp(); // Show the main app after fetching data
         return data;
     } catch (error) {
-        console.error('Error fetching initial game data:', error); // Log to console
+        console.error('Error fetching initial game data:', error);
         showAuthMessage('Failed to load game data. Please try again later.');
-        // Show auth modal if game data load fails
-        showAuthModal();
+        showAuthModal(); // Fallback to auth modal if data load fails
     }
 }
 
@@ -133,15 +133,14 @@ async function updateGameStats() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Game stats updated:', data); // Log to console
+        console.log('Game stats updated:', data);
     } catch (error) {
-        console.error('Error updating game stats:', error); // Log to console
+        console.error('Error updating game stats:', error);
     }
 }
 
 // --- Event Handlers ---
 
-// Toggle between login and register forms
 if (toggleRegister) {
     toggleRegister.addEventListener('click', (e) => {
         e.preventDefault();
@@ -149,10 +148,7 @@ if (toggleRegister) {
         if (registerForm) registerForm.style.display = 'block';
         clearAuthMessage();
     });
-} else {
-    console.warn("toggleRegister element not found.");
 }
-
 
 if (toggleLogin) {
     toggleLogin.addEventListener('click', (e) => {
@@ -161,12 +157,8 @@ if (toggleLogin) {
         if (loginForm) loginForm.style.display = 'block';
         clearAuthMessage();
     });
-} else {
-    console.warn("toggleLogin element not found.");
 }
 
-
-// Login Button Handler
 if (loginBtn) {
     loginBtn.addEventListener('click', async () => {
         const username = loginUsernameInput ? loginUsernameInput.value : '';
@@ -190,22 +182,17 @@ if (loginBtn) {
             if (response.ok) {
                 showAuthMessage(data.message, 'success');
                 currentUser = data.user;
-                // Fetch user-specific game data after successful login
-                await fetchInitialGameData(currentUser.username); // Pass username to fetch specific data if needed
-                // The showMainApp is now handled by fetchInitialGameData's success
+                await fetchInitialGameData(currentUser.username);
             } else {
                 showAuthMessage(data.message);
             }
         } catch (error) {
-            console.error('Login error:', error); // Log to console
+            console.error('Login error:', error);
             showAuthMessage('An error occurred during login. Please try again.');
         }
     });
-} else {
-    console.warn("loginBtn element not found.");
 }
 
-// Register Button Handler
 if (registerBtn) {
     registerBtn.addEventListener('click', async () => {
         const username = registerUsernameInput ? registerUsernameInput.value : '';
@@ -228,25 +215,20 @@ if (registerBtn) {
             const data = await response.json();
             if (response.ok) {
                 showAuthMessage(data.message + " You can now log in.", 'success');
-                // Switch back to login form after successful registration
                 if (registerForm) registerForm.style.display = 'none';
                 if (loginForm) loginForm.style.display = 'block';
-                // Clear inputs for security
                 if (registerUsernameInput) registerUsernameInput.value = '';
                 if (registerPasswordInput) registerPasswordInput.value = '';
             } else {
                 showAuthMessage(data.message);
             }
         } catch (error) {
-            console.error('Registration error:', error); // Log to console
+            console.error('Registration error:', error);
             showAuthMessage('An error occurred during registration. Please try again.');
         }
     });
-} else {
-    console.warn("registerBtn element not found.");
 }
 
-// Guest Login Button Handler
 if (guestButton) {
     guestButton.addEventListener('click', async () => {
         try {
@@ -261,85 +243,47 @@ if (guestButton) {
             if (response.ok) {
                 showAuthMessage(data.message, 'success');
                 currentUser = data.user;
-                // Fetch game data for guest
-                await fetchInitialGameData(currentUser.username); // Pass username to fetch specific data if needed
-                // The showMainApp is now handled by fetchInitialGameData's success
+                await fetchInitialGameData(currentUser.username);
             } else {
                 showAuthMessage(data.message || 'Failed to log in as guest.');
             }
         } catch (error) {
-            console.error('Guest login error:', error); // Log to console
+            console.error('Guest login error:', error);
             showAuthMessage('An error occurred during guest login. Please try again.');
         }
     });
-} else {
-    console.warn("guestButton element not found.");
 }
 
-// Close Auth Modal (if you decide to implement a close button logic for the modal)
-// Note: In your current flow, the modal is hidden on successful login/guest.
-if (authCloseBtn) {
-    authCloseBtn.addEventListener('click', () => {
-        // This button might not be directly functional if modal is only hidden on success.
-        // If you want it to explicitly close and show main app regardless of login, add logic here.
-        // For now, let's keep it simple and assume modal is hidden by successful auth.
-    });
-} else {
-    console.warn("authCloseBtn element not found.");
-}
-
-
-// --- Game Play Example (not fully implemented, just for testing interactions) ---
 if (playBtn) {
     playBtn.addEventListener('click', () => {
         gameStats.score += 10;
         gameStats.coins += 1;
-        if (gameStats.score % 50 === 0) { // Example: level up every 50 score
+        if (gameStats.score % 50 === 0) {
             gameStats.level++;
         }
         updateGameUI();
-        updateGameStats(); // Send updated stats to backend
+        updateGameStats();
     });
-} else {
-    console.warn("playBtn element not found.");
 }
 
 // --- Initial Load Logic ---
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM Content Loaded. Initializing app."); // Log to console
+    console.log("DOM Content Loaded. Initializing app.");
 
-    // Force display both for debugging, then script will try to hide/show
-    // This is primarily for the `display: !important` we added to HTML.
-    // The functions below will try to set display correctly.
+    // Ensure initial display state is correct
+    showAuthModal(); // Always start by showing the authentication modal
 
-    // If there's no current user (i.e., not logged in from a previous session),
-    // always show the authentication modal first.
-    // On app start, there is no 'currentUser' yet.
-    // So, we want to start with the auth modal visible.
-    // The `fetchInitialGameData` is called *after* a successful login/guest to
-    // populate the game UI.
-    showAuthModal(); // Start by showing the authentication modal
-
-
-    // Important: Re-check element references here because of the `password` tag in `index.html`
-    // Ensure you are using <input type="password"> NOT <password>
-    const loginPasswordElement = document.getElementById('loginPassword');
-    const registerPasswordElement = document.getElementById('registerPassword');
-
-    if (loginPasswordElement && loginPasswordElement.tagName !== 'INPUT') {
-        console.error("Critical: loginPassword element is not an <input> tag. It should be <input type='password'>");
-        showAuthMessage("Configuration Error: Please check index.html for login password input.", "error");
+    // Add a check for the user avatar span initial
+    if (userAvatarSpan && currentUser) {
+        userAvatarSpan.textContent = currentUser.avatarInitial || currentUser.username.charAt(0).toUpperCase();
+    } else if (userAvatarSpan) {
+        // Default for initial load before any user is set
+        userAvatarSpan.textContent = 'G';
     }
-    if (registerPasswordElement && registerPasswordElement.tagName !== 'INPUT') {
-        console.error("Critical: registerPassword element is not an <input> tag. It should be <input type='password'>");
-        showAuthMessage("Configuration Error: Please check index.html for register password input.", "error");
-    }
-    // If these warnings appear in your browser's console (if you can get remote debugging working),
-    // it's a huge clue.
 });
 
 // Particles.js (if you still use it, ensure particles.min.js is linked in HTML)
-// Otherwise, remove this block if you're handling particles with pure CSS or another method.
+// Make sure particles.min.js is present in your project's root directory.
 /*
 if (typeof particlesJS !== 'undefined') {
     particlesJS('particles', {
